@@ -1,0 +1,508 @@
+/* styles.css - IbizaGirl Paradise Gallery v15.0.0 */
+/* CSS optimizado para prevenir CLS y mejorar rendimiento */
+
+/* ==================== Variables CSS ==================== */
+:root {
+    /* Colores principales */
+    --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    --accent-color: #ff1493;
+    --text-color: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.8);
+    
+    /* Espaciado */
+    --spacing-xs: 5px;
+    --spacing-sm: 10px;
+    --spacing-md: 20px;
+    --spacing-lg: 30px;
+    --spacing-xl: 40px;
+    
+    /* Tamaños de contenedor */
+    --container-max-width: 1400px;
+    --sidebar-width: 300px;
+    
+    /* Alturas mínimas para anuncios (prevenir CLS) */
+    --ad-height-banner: 90px;
+    --ad-height-sidebar: 250px;
+    --ad-height-footer: 90px;
+    
+    /* Animaciones */
+    --transition-fast: 0.3s ease;
+    --transition-normal: 0.5s ease;
+    
+    /* Sombras */
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.15);
+    --shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.2);
+    
+    /* Z-index layers */
+    --z-content: 1;
+    --z-ads: 100;
+    --z-sidebar-ads: 2000;
+    --z-modal: 5000;
+    --z-loading: 10000;
+}
+
+/* ==================== Reset y Base ==================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--primary-gradient);
+    color: var(--text-color);
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* ==================== Loading Screen ==================== */
+#loadingScreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--primary-gradient);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: var(--z-loading);
+    transition: opacity var(--transition-normal);
+}
+
+.loader {
+    width: 60px;
+    height: 60px;
+    border: 5px solid rgba(255, 255, 255, 0.3);
+    border-top-color: var(--text-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ==================== Contenedores de Anuncios (CLS Fix) ==================== */
+.ad-container {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative;
+    width: 100%;
+    margin: var(--spacing-md) auto;
+    background: rgba(0, 0, 0, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: var(--transition-fast);
+}
+
+/* Alturas mínimas específicas para prevenir CLS */
+.ad-header,
+.ad-juicyads.ad-header,
+.ad-exoclick.ad-header,
+.ad-eroadvertising.ad-header {
+    min-height: var(--ad-height-banner);
+    z-index: var(--z-ads);
+}
+
+.ad-sidebar,
+.ad-juicyads.ad-sidebar,
+.ad-exoclick.ad-sidebar {
+    min-height: var(--ad-height-sidebar);
+    z-index: var(--z-sidebar-ads);
+    position: sticky;
+    top: var(--spacing-md);
+}
+
+.ad-footer,
+.ad-juicyads.ad-footer,
+.ad-exoclick.ad-footer,
+.ad-eroadvertising.ad-footer {
+    min-height: var(--ad-height-footer);
+    z-index: var(--z-ads);
+}
+
+/* Secciones de anuncios */
+.ad-section {
+    width: 100%;
+    padding: var(--spacing-md) 0;
+    text-align: center;
+    position: relative;
+}
+
+.ad-section-header {
+    background: rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.ad-section-footer {
+    background: rgba(0, 0, 0, 0.1);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: var(--spacing-xl);
+}
+
+/* Fix específico para iframes de ExoClick */
+.ad-exoclick iframe {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: 100% !important;
+    min-height: 250px;
+    border: none;
+    background: transparent;
+}
+
+/* ==================== Layout Principal ==================== */
+.main-container {
+    width: 100%;
+    max-width: var(--container-max-width);
+    margin: 0 auto;
+    padding: var(--spacing-md);
+    position: relative;
+}
+
+.content-wrapper {
+    display: grid;
+    grid-template-columns: 1fr var(--sidebar-width);
+    gap: var(--spacing-lg);
+    align-items: start;
+}
+
+.main-content {
+    width: 100%;
+    min-height: 600px;
+}
+
+.sidebar {
+    position: sticky;
+    top: var(--spacing-md);
+    width: var(--sidebar-width);
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+}
+
+/* ==================== Hero Section ==================== */
+.hero-section {
+    width: 100%;
+    padding: var(--spacing-xl) var(--spacing-md);
+    text-align: center;
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    margin-bottom: var(--spacing-lg);
+}
+
+.hero-title {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 700;
+    background: linear-gradient(45deg, #fff, var(--accent-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: var(--spacing-md);
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from { text-shadow: 0 0 10px rgba(255, 20, 147, 0.5); }
+    to { text-shadow: 0 0 20px rgba(255, 20, 147, 0.8); }
+}
+
+.hero-description {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* ==================== Gallery Grid ==================== */
+.gallery-container {
+    width: 100%;
+    padding: var(--spacing-md);
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+/* Items de galería con aspect-ratio para prevenir CLS */
+.gallery-item {
+    aspect-ratio: 1;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    cursor: pointer;
+    transition: var(--transition-fast);
+    animation: fadeInUp 0.6s ease backwards;
+}
+
+.gallery-item:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.gallery-item img,
+.gallery-item video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition-fast);
+}
+
+.gallery-item:hover img,
+.gallery-item:hover video {
+    transform: scale(1.1);
+}
+
+/* Overlay para items premium */
+.gallery-item.premium::after {
+    content: '👑 PREMIUM';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: var(--accent-color);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    z-index: 2;
+}
+
+/* Skeleton loader para contenido */
+.skeleton-item {
+    aspect-ratio: 1;
+    width: 100%;
+    background: linear-gradient(90deg, 
+        rgba(255, 255, 255, 0.1) 0%, 
+        rgba(255, 255, 255, 0.2) 50%, 
+        rgba(255, 255, 255, 0.1) 100%);
+    background-size: 200% 100%;
+    animation: skeleton 1.5s ease infinite;
+    border-radius: 12px;
+}
+
+@keyframes skeleton {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ==================== Video Player ==================== */
+.video-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: #000;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: var(--spacing-md);
+}
+
+.video-container video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.video-controls {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+    padding: var(--spacing-md);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    opacity: 0;
+    transition: var(--transition-fast);
+}
+
+.video-container:hover .video-controls {
+    opacity: 1;
+}
+
+/* ==================== Botones y CTA ==================== */
+.btn {
+    display: inline-block;
+    padding: 12px 24px;
+    background: var(--accent-color);
+    color: white;
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: 600;
+    transition: var(--transition-fast);
+    cursor: pointer;
+    border: none;
+    font-size: 1rem;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    background: linear-gradient(45deg, var(--accent-color), #ff69b4);
+}
+
+.btn-premium {
+    background: linear-gradient(45deg, gold, orange);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+/* ==================== PayPal Buttons ==================== */
+.paypal-button-container {
+    width: 100%;
+    max-width: 400px;
+    margin: var(--spacing-md) auto;
+    padding: var(--spacing-md);
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+}
+
+/* ==================== Footer ==================== */
+.footer {
+    width: 100%;
+    padding: var(--spacing-xl) var(--spacing-md);
+    background: rgba(0, 0, 0, 0.3);
+    text-align: center;
+    margin-top: var(--spacing-xl);
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.footer-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: var(--transition-fast);
+}
+
+.footer-links a:hover {
+    color: var(--text-color);
+}
+
+/* ==================== Responsive Design ==================== */
+@media (max-width: 1024px) {
+    .content-wrapper {
+        grid-template-columns: 1fr;
+    }
+    
+    .sidebar {
+        width: 100%;
+        position: relative;
+        top: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    :root {
+        --spacing-md: 15px;
+        --spacing-lg: 20px;
+    }
+    
+    .gallery-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: var(--spacing-sm);
+    }
+    
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .ad-sidebar {
+        min-height: 200px;
+    }
+}
+
+@media (max-width: 480px) {
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .btn {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* ==================== Utilidades ==================== */
+.text-center { text-align: center; }
+.mt-1 { margin-top: var(--spacing-sm); }
+.mt-2 { margin-top: var(--spacing-md); }
+.mt-3 { margin-top: var(--spacing-lg); }
+.mb-1 { margin-bottom: var(--spacing-sm); }
+.mb-2 { margin-bottom: var(--spacing-md); }
+.mb-3 { margin-bottom: var(--spacing-lg); }
+
+.hidden { display: none !important; }
+.visible { visibility: visible !important; }
+.opacity-0 { opacity: 0; }
+.opacity-100 { opacity: 1; }
+
+/* ==================== Mejoras de Rendimiento ==================== */
+.will-change-transform {
+    will-change: transform;
+}
+
+.gpu-accelerated {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+/* Prevenir parpadeos en Chrome */
+.no-flicker {
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+/* ==================== Print Styles ==================== */
+@media print {
+    .ad-container,
+    .ad-section,
+    #loadingScreen,
+    .video-controls,
+    .btn {
+        display: none !important;
+    }
+}

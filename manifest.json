@@ -1,0 +1,143 @@
+{
+  "name": "IbizaGirl.pics - Premium Gallery",
+  "short_name": "IbizaGirl",
+  "description": "Premium Ibiza gallery with exclusive photos and videos. Daily updates with paradise content.",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#667eea",
+  "orientation": "any",
+  "scope": "/",
+  "lang": "es",
+  "dir": "ltr",
+  "categories": ["entertainment", "photo", "lifestyle"],
+  "iarc_rating_id": "e84b072d-71b3-4d3e-86ae-31a1f1d51f4c",
+  "icons": [
+    {
+      "src": "/full/bikini.webp",
+      "sizes": "512x512",
+      "type": "image/webp",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/full/bikini.webp",
+      "sizes": "192x192",
+      "type": "image/webp"
+    },
+    {
+      "src": "/full/bikini.webp",
+      "sizes": "144x144",
+      "type": "image/webp"
+    },
+    {
+      "src": "/full/bikini.webp",
+      "sizes": "96x96",
+      "type": "image/webp"
+    },
+    {
+      "src": "/full/bikini.webp",
+      "sizes": "72x72",
+      "type": "image/webp"
+    },
+    {
+      "src": "/full/bikini.webp",
+      "sizes": "48x48",
+      "type": "image/webp"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/full/bikbanner.webp",
+      "sizes": "1280x720",
+      "type": "image/webp",
+      "label": "Homepage banner"
+    },
+    {
+      "src": "/full/bikbanner2.webp",
+      "sizes": "1280x720",
+      "type": "image/webp",
+      "label": "Gallery preview"
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "shortcuts": [
+    {
+      "name": "Gallery",
+      "short_name": "Gallery",
+      "description": "View photo gallery",
+      "url": "/main.html#gallery",
+      "icons": [
+        {
+          "src": "/full/bikini.webp",
+          "sizes": "96x96",
+          "type": "image/webp"
+        }
+      ]
+    },
+    {
+      "name": "Videos",
+      "short_name": "Videos",
+      "description": "Watch premium videos",
+      "url": "/main.html#videos",
+      "icons": [
+        {
+          "src": "/full/bikini.webp",
+          "sizes": "96x96",
+          "type": "image/webp"
+        }
+      ]
+    },
+    {
+      "name": "VIP Access",
+      "short_name": "VIP",
+      "description": "Get VIP access",
+      "url": "/main.html#vip",
+      "icons": [
+        {
+          "src": "/full/bikini.webp",
+          "sizes": "96x96",
+          "type": "image/webp"
+        }
+      ]
+    }
+  ],
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "launch_handler": {
+    "client_mode": ["navigate-existing", "auto"]
+  },
+  "display_override": [
+    "window-controls-overlay",
+    "standalone",
+    "minimal-ui",
+    "browser"
+  ],
+  "protocol_handlers": [
+    {
+      "protocol": "web+ibizagirl",
+      "url": "/main.html?content=%s"
+    }
+  ],
+  "file_handlers": [
+    {
+      "action": "/main.html",
+      "accept": {
+        "image/webp": [".webp"],
+        "image/jpeg": [".jpg", ".jpeg"],
+        "image/png": [".png"],
+        "video/mp4": [".mp4"]
+      }
+    }
+  ],
+  "share_target": {
+    "action": "/main.html",
+    "method": "GET",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  }
+}

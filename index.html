@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IbizaGirl.pics - Verificación de Edad | Age Verification</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="IbizaGirl.pics - Galería premium de Ibiza. Verificación de edad requerida. Must be 18+ to enter.">
+    <meta name="keywords" content="Ibiza, gallery, premium, adult content, age verification">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="IbizaGirl.pics - Premium Gallery">
+    <meta property="og:description" content="Exclusive Ibiza content. Age verification required.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ibizagirl.pics/">
+    <meta property="og:image" content="https://ibizagirl.pics/full/bikini.webp">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/full/bikini.webp" type="image/webp">
+    <link rel="shortcut icon" href="/full/bikini.webp" type="image/webp">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .verification-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            animation: slideIn 0.5s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 30px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #667eea;
+        }
+        
+        h1 {
+            color: #333;
+            font-size: 2em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+        }
+        
+        .warning-box {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .warning-box h2 {
+            color: #856404;
+            font-size: 1.3em;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .warning-icon {
+            font-size: 1.5em;
+        }
+        
+        .warning-text {
+            color: #856404;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .age-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 15px 40px;
+            font-size: 1.1em;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-enter {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-enter:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-leave {
+            background: #e0e0e0;
+            color: #666;
+        }
+        
+        .btn-leave:hover {
+            background: #d0d0d0;
+        }
+        
+        .legal-text {
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid #e0e0e0;
+            color: #999;
+            font-size: 0.9em;
+            line-height: 1.6;
+        }
+        
+        .languages {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .lang-btn {
+            padding: 5px 15px;
+            background: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            color: #666;
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+        
+        .lang-btn:hover, .lang-btn.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+        
+        @media (max-width: 480px) {
+            .verification-container {
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 1.5em;
+            }
+            
+            .age-buttons {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="verification-container">
+        <img src="/full/bikini.webp" alt="IbizaGirl.pics" class="logo" onerror="this.style.display='none'">
+        
+        <h1>IbizaGirl.pics</h1>
+        <p class="subtitle">Premium Ibiza Gallery</p>
+        
+        <div class="warning-box">
+            <h2>
+                <span class="warning-icon">⚠️</span>
+                <span>Age Verification Required</span>
+            </h2>
+            <p class="warning-text">
+                This website contains adult content and is intended for persons 18 years or older.
+                By entering, you confirm that you are at least 18 years old and agree to our terms.
+            </p>
+            <p class="warning-text">
+                Este sitio web contiene contenido para adultos y está destinado a personas mayores de 18 años.
+            </p>
+        </div>
+        
+        <div class="age-buttons">
+            <button onclick="enterSite()" class="btn btn-enter">
+                I am 18+ / Soy mayor de 18
+            </button>
+            <button onclick="leaveSite()" class="btn btn-leave">
+                Leave / Salir
+            </button>
+        </div>
+        
+        <div class="languages">
+            <a href="#" class="lang-btn active" onclick="setLanguage('es')">Español</a>
+            <a href="#" class="lang-btn" onclick="setLanguage('en')">English</a>
+            <a href="#" class="lang-btn" onclick="setLanguage('fr')">Français</a>
+            <a href="#" class="lang-btn" onclick="setLanguage('de')">Deutsch</a>
+            <a href="#" class="lang-btn" onclick="setLanguage('it')">Italiano</a>
+        </div>
+        
+        <div class="legal-text">
+            <p>© 2025 IbizaGirl.pics - All rights reserved</p>
+            <p>By entering this site, you agree to our Terms of Service and Privacy Policy.</p>
+            <p>This site uses cookies to enhance your experience.</p>
+        </div>
+    </div>
+    
+    <script>
+        // Verificar si el usuario ya verificó su edad
+        if (localStorage.getItem('ageVerified') === 'true') {
+            // Si ya verificó, redirigir a main.html
+            window.location.href = '/main.html';
+        }
+        
+        function enterSite() {
+            // Guardar verificación de edad
+            localStorage.setItem('ageVerified', 'true');
+            localStorage.setItem('ageVerifiedDate', new Date().toISOString());
+            
+            // Redirigir a la página principal
+            window.location.href = '/main.html';
+        }
+        
+        function leaveSite() {
+            // Redirigir a Google
+            window.location.href = 'https://www.google.com';
+        }
+        
+        function setLanguage(lang) {
+            // Actualizar botones activos
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Guardar preferencia de idioma
+            localStorage.setItem('preferredLanguage', lang);
+            
+            // Aquí podrías cambiar los textos según el idioma
+            console.log('Language set to:', lang);
+        }
+        
+        // Prevenir clic derecho
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            return false;
+        });
+        
+        // Log para analytics
+        console.log('Age verification page loaded');
+    </script>
+</body>
+</html>

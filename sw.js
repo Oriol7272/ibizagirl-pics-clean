@@ -1,14 +1,15 @@
 // ============================
-// IBIZAGIRL.PICS SERVICE WORKER v4.1.0
-// PWA + Cache Management
+// IBIZAGIRL.PICS SERVICE WORKER v2.1.0
+// Versión corregida sin archivos faltantes
 // ============================
 
-const CACHE_NAME = 'ibizagirl-v4.1.0';
-const DYNAMIC_CACHE = 'ibizagirl-dynamic-v4.1.0';
-const IMAGE_CACHE = 'ibizagirl-images-v4.1.0';
-const VIDEO_CACHE = 'ibizagirl-videos-v4.1.0';
+const CACHE_VERSION = 'v2.1.0';
+const CACHE_NAME = `ibizagirl-${CACHE_VERSION}`;
+const DYNAMIC_CACHE = `ibizagirl-dynamic-${CACHE_VERSION}`;
+const IMAGE_CACHE = `ibizagirl-images-${CACHE_VERSION}`;
+const VIDEO_CACHE = `ibizagirl-videos-${CACHE_VERSION}`;
 
-// Archivos esenciales para cachear
+// Archivos esenciales para cachear (SOLO los que existen)
 const STATIC_ASSETS = [
     '/',
     '/index.html',
@@ -22,6 +23,7 @@ const STATIC_ASSETS = [
     '/content-data5.js',
     '/content-data6.js',
     '/main-integrated.js'
+    // REMOVIDOS: content-data-integration.js y main-script-updated.js que no existen
 ];
 
 // Imágenes críticas para precachear
@@ -29,15 +31,13 @@ const CRITICAL_IMAGES = [
     '/full/bikini.webp',
     '/full/bikbanner.webp',
     '/full/bikbanner2.webp',
-    '/full/backbikini.webp',
-    '/full/bikini3.webp',
-    '/full/bikini5.webp'
+    '/full/backbikini.webp'
 ];
 
 // Límites de caché
 const CACHE_LIMITS = {
-    images: 100,  // Máximo 100 imágenes en caché
-    videos: 10,   // Máximo 10 videos en caché
+    images: 50,  // Reducido para Vercel
+    videos: 5,   // Reducido para Vercel
     age: 7 * 24 * 60 * 60 * 1000  // 7 días
 };
 
@@ -46,23 +46,37 @@ const CACHE_LIMITS = {
 // ============================
 
 self.addEventListener('install', event => {
-    console.log('[Service Worker] Instalando versión:', CACHE_NAME);
+    console.log('[SW] Instalando Service Worker', CACHE_VERSION);
     
     event.waitUntil(
         Promise.all([
-            // Cachear archivos estáticos
+            // Cachear archivos estáticos con manejo de errores individual
             caches.open(CACHE_NAME).then(cache => {
-                console.log('[Service Worker] Cacheando archivos estáticos');
-                return cache.addAll(STATIC_ASSETS);
+                console.log('[SW] Cacheando recursos esenciales...');
+                return Promise.allSettled(
+                    STATIC_ASSETS.map(url => 
+                        cache.add(url).catch(err => {
+                            console.warn(`[SW] No se pudo cachear ${url}:`, err.message);
+                            return null;
+                        })
+                    )
+                );
             }),
             
-            // Cachear imágenes críticas
+            // Cachear imágenes críticas con manejo de errores
             caches.open(IMAGE_CACHE).then(cache => {
-                console.log('[Service Worker] Cacheando imágenes críticas');
-                return cache.addAll(CRITICAL_IMAGES);
+                console.log('[SW] Cacheando imágenes críticas...');
+                return Promise.allSettled(
+                    CRITICAL_IMAGES.map(url => 
+                        cache.add(url).catch(err => {
+                            console.warn(`[SW] No se pudo cachear imagen ${url}:`, err.message);
+                            return null;
+                        })
+                    )
+                );
             })
         ]).then(() => {
-            console.log('[Service Worker] Instalación completada');
+            console.log('[SW] ✅ Instalación completada');
             return self.skipWaiting();
         })
     );
@@ -73,7 +87,7 @@ self.addEventListener('install', event => {
 // ============================
 
 self.addEventListener('activate', event => {
-    console.log('[Service Worker] Activando versión:', CACHE_NAME);
+    console.log('[SW] Activando Service Worker', CACHE_VERSION);
     
     event.waitUntil(
         Promise.all([
@@ -83,23 +97,19 @@ self.addEventListener('activate', event => {
                     cacheNames
                         .filter(cacheName => {
                             return cacheName.startsWith('ibizagirl-') && 
-                                   cacheName !== CACHE_NAME &&
-                                   cacheName !== DYNAMIC_CACHE &&
-                                   cacheName !== IMAGE_CACHE &&
-                                   cacheName !== VIDEO_CACHE;
+                                   !cacheName.includes(CACHE_VERSION);
                         })
                         .map(cacheName => {
-                            console.log('[Service Worker] Eliminando caché antiguo:', cacheName);
+                            console.log('[SW] Eliminando caché antiguo:', cacheName);
                             return caches.delete(cacheName);
                         })
                 );
             }),
             
-            // Limpiar entradas antiguas en cachés de imágenes y videos
-            cleanOldCacheEntries()
+            // Tomar control de todos los clientes
+            self.clients.claim()
         ]).then(() => {
-            console.log('[Service Worker] Activación completada');
-            return self.clients.claim();
+            console.log('[SW] ✅ Activación completada');
         })
     );
 });
@@ -117,10 +127,19 @@ self.addEventListener('fetch', event => {
         return;
     }
     
-    // Ignorar peticiones de PayPal y analytics
-    if (url.hostname.includes('paypal') || 
-        url.hostname.includes('google') ||
-        url.hostname.includes('googletagmanager')) {
+    // Ignorar peticiones de PayPal, analytics y otros servicios externos
+    const ignoredHosts = ['paypal', 'google', 'googletagmanager', 'juicyads', 'exoclick'];
+    if (ignoredHosts.some(host => url.hostname.includes(host))) {
+        return;
+    }
+    
+    // Ignorar archivos que sabemos que no existen
+    const nonExistentFiles = [
+        'content-data-integration.js',
+        'main-script-updated.js',
+        'jads.js'
+    ];
+    if (nonExistentFiles.some(file => url.pathname.includes(file))) {
         return;
     }
     
@@ -144,7 +163,7 @@ self.addEventListener('fetch', event => {
         return;
     }
     
-    // Estrategia para HTML (Network First)
+    // Estrategia para HTML
     if (request.mode === 'navigate' || 
         request.destination === 'document' ||
         url.pathname.endsWith('.html')) {
@@ -162,34 +181,26 @@ self.addEventListener('fetch', event => {
 
 // Manejar peticiones de imágenes (Cache First)
 async function handleImageRequest(request) {
-    const cache = await caches.open(IMAGE_CACHE);
-    
-    // Buscar en caché
-    const cachedResponse = await cache.match(request);
-    if (cachedResponse) {
-        // Actualizar en segundo plano si es antigua
-        const cacheTime = await getCacheTime(request);
-        if (Date.now() - cacheTime > CACHE_LIMITS.age) {
-            fetchAndCache(request, cache);
-        }
-        return cachedResponse;
-    }
-    
-    // Si no está en caché, buscar en red
     try {
+        const cache = await caches.open(IMAGE_CACHE);
+        const cachedResponse = await cache.match(request);
+        
+        if (cachedResponse) {
+            return cachedResponse;
+        }
+        
         const networkResponse = await fetch(request);
         if (networkResponse.ok) {
-            // Clonar la respuesta antes de cachearla
             cache.put(request, networkResponse.clone());
-            
-            // Limpiar caché si es necesario
             limitCacheSize(IMAGE_CACHE, CACHE_LIMITS.images);
         }
         return networkResponse;
     } catch (error) {
-        console.error('[Service Worker] Error al obtener imagen:', error);
-        // Devolver imagen placeholder si falla
-        return cache.match('/full/bikini.webp');
+        console.error('[SW] Error con imagen:', error);
+        // Intentar devolver una imagen de fallback
+        const cache = await caches.open(IMAGE_CACHE);
+        const fallback = await cache.match('/full/bikini.webp');
+        return fallback || new Response('', { status: 404 });
     }
 }
 
@@ -198,9 +209,9 @@ async function handleVideoRequest(request) {
     try {
         const networkResponse = await fetch(request);
         if (networkResponse.ok) {
-            // Solo cachear videos pequeños (< 10MB)
+            // Solo cachear videos pequeños
             const contentLength = networkResponse.headers.get('content-length');
-            if (contentLength && parseInt(contentLength) < 10485760) {
+            if (contentLength && parseInt(contentLength) < 5242880) { // 5MB
                 const cache = await caches.open(VIDEO_CACHE);
                 cache.put(request, networkResponse.clone());
                 limitCacheSize(VIDEO_CACHE, CACHE_LIMITS.videos);
@@ -211,37 +222,39 @@ async function handleVideoRequest(request) {
         // Si falla la red, buscar en caché
         const cache = await caches.open(VIDEO_CACHE);
         const cachedResponse = await cache.match(request);
-        if (cachedResponse) {
-            return cachedResponse;
-        }
-        throw error;
+        return cachedResponse || new Response('', { status: 503 });
     }
 }
 
-// Manejar archivos estáticos (Cache First con actualización)
+// Manejar archivos estáticos
 async function handleStaticRequest(request) {
-    const cache = await caches.open(CACHE_NAME);
-    const cachedResponse = await cache.match(request);
-    
-    if (cachedResponse) {
-        // Actualizar en segundo plano
-        fetchAndCache(request, cache);
-        return cachedResponse;
-    }
-    
     try {
+        const cache = await caches.open(CACHE_NAME);
+        const cachedResponse = await cache.match(request);
+        
+        if (cachedResponse) {
+            // Actualizar en segundo plano
+            fetch(request).then(response => {
+                if (response.ok) {
+                    cache.put(request, response);
+                }
+            }).catch(() => {});
+            
+            return cachedResponse;
+        }
+        
         const networkResponse = await fetch(request);
         if (networkResponse.ok) {
             cache.put(request, networkResponse.clone());
         }
         return networkResponse;
     } catch (error) {
-        console.error('[Service Worker] Error al obtener recurso estático:', error);
-        return new Response('Offline', { status: 503 });
+        console.error('[SW] Error con archivo estático:', error);
+        return new Response('', { status: 503 });
     }
 }
 
-// Manejar navegación (Network First)
+// Manejar navegación
 async function handleNavigationRequest(request) {
     try {
         const networkResponse = await fetch(request);
@@ -259,30 +272,18 @@ async function handleNavigationRequest(request) {
             return cachedResponse;
         }
         
-        // Si no hay caché, devolver página offline
-        return cache.match('/index.html') || 
-               new Response(generateOfflinePage(), {
-                   headers: { 'Content-Type': 'text/html' }
-               });
+        // Página offline de respaldo
+        return cache.match('/index.html') || generateOfflinePage();
     }
 }
 
 // Manejar peticiones por defecto
 async function handleDefaultRequest(request) {
-    const cache = await caches.open(DYNAMIC_CACHE);
-    
     try {
-        const networkResponse = await fetch(request);
-        if (networkResponse.ok) {
-            cache.put(request, networkResponse.clone());
-        }
-        return networkResponse;
+        return await fetch(request);
     } catch (error) {
-        const cachedResponse = await cache.match(request);
-        if (cachedResponse) {
-            return cachedResponse;
-        }
-        throw error;
+        const cache = await caches.open(DYNAMIC_CACHE);
+        return await cache.match(request) || new Response('', { status: 503 });
     }
 }
 
@@ -290,25 +291,12 @@ async function handleDefaultRequest(request) {
 // FUNCIONES AUXILIARES
 // ============================
 
-// Obtener y cachear en segundo plano
-async function fetchAndCache(request, cache) {
-    try {
-        const networkResponse = await fetch(request);
-        if (networkResponse.ok) {
-            cache.put(request, networkResponse);
-        }
-    } catch (error) {
-        // Silenciosamente fallar si no se puede actualizar
-    }
-}
-
 // Limitar tamaño del caché
 async function limitCacheSize(cacheName, maxItems) {
     const cache = await caches.open(cacheName);
     const keys = await cache.keys();
     
     if (keys.length > maxItems) {
-        // Eliminar los más antiguos
         const keysToDelete = keys.slice(0, keys.length - maxItems);
         await Promise.all(
             keysToDelete.map(key => cache.delete(key))
@@ -316,47 +304,9 @@ async function limitCacheSize(cacheName, maxItems) {
     }
 }
 
-// Limpiar entradas antiguas del caché
-async function cleanOldCacheEntries() {
-    const cacheNames = [IMAGE_CACHE, VIDEO_CACHE, DYNAMIC_CACHE];
-    
-    for (const cacheName of cacheNames) {
-        const cache = await caches.open(cacheName);
-        const keys = await cache.keys();
-        
-        for (const request of keys) {
-            const response = await cache.match(request);
-            if (response) {
-                const dateHeader = response.headers.get('date');
-                if (dateHeader) {
-                    const cacheTime = new Date(dateHeader).getTime();
-                    if (Date.now() - cacheTime > CACHE_LIMITS.age) {
-                        await cache.delete(request);
-                    }
-                }
-            }
-        }
-    }
-}
-
-// Obtener tiempo de caché
-async function getCacheTime(request) {
-    const cache = await caches.open(IMAGE_CACHE);
-    const response = await cache.match(request);
-    
-    if (response) {
-        const dateHeader = response.headers.get('date');
-        if (dateHeader) {
-            return new Date(dateHeader).getTime();
-        }
-    }
-    
-    return 0;
-}
-
 // Generar página offline
 function generateOfflinePage() {
-    return `
+    const html = `
         <!DOCTYPE html>
         <html lang="es">
         <head>
@@ -379,15 +329,8 @@ function generateOfflinePage() {
                 .offline-container {
                     max-width: 400px;
                 }
-                h1 {
-                    font-size: 2.5em;
-                    margin-bottom: 20px;
-                }
-                p {
-                    font-size: 1.2em;
-                    opacity: 0.9;
-                    margin-bottom: 30px;
-                }
+                h1 { font-size: 2.5em; margin-bottom: 20px; }
+                p { font-size: 1.2em; opacity: 0.9; margin-bottom: 30px; }
                 button {
                     padding: 15px 30px;
                     background: linear-gradient(45deg, #ff1493, #ff69b4);
@@ -396,10 +339,6 @@ function generateOfflinePage() {
                     border-radius: 25px;
                     font-size: 1.1em;
                     cursor: pointer;
-                    transition: transform 0.3s;
-                }
-                button:hover {
-                    transform: translateY(-2px);
                 }
             </style>
         </head>
@@ -407,105 +346,25 @@ function generateOfflinePage() {
             <div class="offline-container">
                 <h1>📡 Sin Conexión</h1>
                 <p>Parece que no tienes conexión a Internet.</p>
-                <p>Por favor, verifica tu conexión e intenta de nuevo.</p>
                 <button onclick="window.location.reload()">Reintentar</button>
             </div>
         </body>
         </html>
     `;
+    
+    return new Response(html, {
+        headers: { 'Content-Type': 'text/html' }
+    });
 }
 
 // ============================
-// MENSAJES Y SINCRONIZACIÓN
+// MENSAJES
 // ============================
 
-// Escuchar mensajes del cliente
 self.addEventListener('message', event => {
     if (event.data && event.data.type === 'SKIP_WAITING') {
         self.skipWaiting();
     }
-    
-    if (event.data && event.data.type === 'CLEAR_CACHE') {
-        event.waitUntil(
-            caches.keys().then(cacheNames => {
-                return Promise.all(
-                    cacheNames.map(cacheName => caches.delete(cacheName))
-                );
-            }).then(() => {
-                return event.ports[0].postMessage({ 
-                    type: 'CACHE_CLEARED',
-                    message: 'Todos los cachés han sido eliminados'
-                });
-            })
-        );
-    }
 });
 
-// Background Sync para actualizar contenido
-self.addEventListener('sync', event => {
-    if (event.tag === 'update-content') {
-        event.waitUntil(updateContent());
-    }
-});
-
-async function updateContent() {
-    try {
-        // Actualizar archivos críticos
-        const cache = await caches.open(CACHE_NAME);
-        const updates = STATIC_ASSETS.map(url => 
-            fetch(url).then(response => {
-                if (response.ok) {
-                    return cache.put(url, response);
-                }
-            }).catch(() => {})
-        );
-        
-        await Promise.all(updates);
-        console.log('[Service Worker] Contenido actualizado en segundo plano');
-    } catch (error) {
-        console.error('[Service Worker] Error actualizando contenido:', error);
-    }
-}
-
-// Push notifications (preparado para futuro uso)
-self.addEventListener('push', event => {
-    const options = {
-        body: event.data ? event.data.text() : 'Nuevo contenido disponible en IbizaGirl.pics',
-        icon: '/full/bikini.webp',
-        badge: '/full/bikini.webp',
-        vibrate: [100, 50, 100],
-        data: {
-            dateOfArrival: Date.now(),
-            primaryKey: 1
-        },
-        actions: [
-            {
-                action: 'explore',
-                title: 'Ver Ahora',
-                icon: '/full/bikini.webp'
-            },
-            {
-                action: 'close',
-                title: 'Cerrar',
-                icon: '/full/bikini.webp'
-            }
-        ]
-    };
-    
-    event.waitUntil(
-        self.registration.showNotification('IbizaGirl.pics 🏖️', options)
-    );
-});
-
-// Manejar clicks en notificaciones
-self.addEventListener('notificationclick', event => {
-    event.notification.close();
-    
-    if (event.action === 'explore') {
-        event.waitUntil(
-            clients.openWindow('https://ibizagirl.pics/main.html')
-        );
-    }
-});
-
-console.log('[Service Worker] Cargado y listo - Versión:', CACHE_NAME);
+console.log('[SW] Service Worker', CACHE_VERSION, 'cargado');

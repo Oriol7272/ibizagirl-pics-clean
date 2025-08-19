@@ -5,176 +5,872 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IbizaGirl.pics - Galería Premium | Paradise Gallery 🏖️</title>
     
-    <!-- Content Security Policy optimizada para anuncios -->
-    <meta http-equiv="Content-Security-Policy" content="
-        default-src * 'unsafe-inline' 'unsafe-eval' data: blob:;
-        script-src * 'unsafe-inline' 'unsafe-eval' 'unsafe-hashes' blob:;
-        worker-src * blob:;
-        connect-src *;
-        img-src * data: blob:;
-        frame-src *;
-        style-src * 'unsafe-inline';
-        font-src *;
-        media-src *;
-        object-src *;
-        base-uri 'self';
-        form-action 'self';
-    ">
-    
-    <!-- Permitir todos los referrers para anuncios -->
-    <meta name="referrer" content="no-referrer-when-downgrade">
-    
-    <!-- Favicon y App Icons -->
-    <link rel="icon" href="/full/bikini.webp" type="image/webp">
-    <link rel="shortcut icon" href="/full/bikini.webp" type="image/webp">
-    <link rel="apple-touch-icon" href="/full/bikini.webp">
-    <link rel="apple-touch-icon" sizes="180x180" href="/full/bikini.webp">
-    <link rel="icon" type="image/webp" sizes="32x32" href="/full/bikini.webp">
-    <link rel="icon" type="image/webp" sizes="16x16" href="/full/bikini.webp">
-    
-    <!-- PWA Meta Tags -->
-    <meta name="application-name" content="IbizaGirl.pics">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="IbizaGirl">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="msapplication-TileColor" content="#0077be">
-    <meta name="msapplication-tap-highlight" content="no">
-    <meta name="theme-color" content="#0077be">
-    
     <!-- SEO Meta Tags -->
     <meta name="description" content="Galería premium de Ibiza con 400+ fotos y 80+ videos HD actualizados diariamente. Contenido exclusivo del paraíso mediterráneo español.">
-    <meta name="keywords" content="Ibiza, galería, premium, fotos HD, videos exclusivos, contenido VIP, paradise gallery, Mediterranean, Spanish beaches">
-    <meta name="author" content="IbizaGirl.pics">
-    <meta name="copyright" content="IbizaGirl.pics 2025">
-    <meta name="robots" content="index, follow, max-image-preview:large">
-    <meta name="googlebot" content="index, follow">
+    <meta name="keywords" content="Ibiza, galería, premium, fotos HD, videos exclusivos, contenido VIP, paradise gallery">
     
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="IbizaGirl.pics - Premium Ibiza Gallery">
-    <meta property="og:description" content="400+ exclusive photos and 80+ HD videos from Ibiza paradise. Daily updates with premium content.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://ibizagirl.pics/">
-    <meta property="og:image" content="https://ibizagirl.pics/full/bikini.webp">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:site_name" content="IbizaGirl.pics">
-    <meta property="og:locale" content="es_ES">
-    <meta property="og:locale:alternate" content="en_US">
+    <meta property="og:description" content="400+ exclusive photos and 80+ HD videos from Ibiza paradise">
+    <meta property="og:image" content="/full/bikini.webp">
     
-    <!-- Twitter Card Meta Tags -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="IbizaGirl.pics - Premium Gallery">
-    <meta name="twitter:description" content="Exclusive Ibiza content with daily updates">
-    <meta name="twitter:image" content="https://ibizagirl.pics/full/bikini.webp">
-    
-    <!-- Preconnect para optimización -->
-    <link rel="preconnect" href="https://www.paypal.com">
-    <link rel="preconnect" href="https://www.googletagmanager.com">
-    <link rel="preconnect" href="https://cdn.jsdelivr.net">
-    
-    <!-- DNS Prefetch para anuncios -->
-    <link rel="dns-prefetch" href="//www.paypal.com">
-    <link rel="dns-prefetch" href="//www.googletagmanager.com">
-    <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
-    
-    <!-- PWA Manifest -->
-    <link rel="manifest" href="/manifest.json">
-    <link rel="canonical" href="https://ibizagirl.pics/main.html">
-    
-    <!-- Language Alternates -->
-    <link rel="alternate" href="https://ibizagirl.pics/main.html" hreflang="es">
-    <link rel="alternate" href="https://ibizagirl.pics/main.html?lang=en" hreflang="en">
-    <link rel="alternate" href="https://ibizagirl.pics/main.html" hreflang="x-default">
-    
-    <!-- Estilos -->
-    <link rel="stylesheet" href="styles.css">
-    
-    <!-- Canvas Confetti para efectos -->
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- Favicon -->
+    <link rel="icon" href="/full/bikini.webp" type="image/webp">
     
     <!-- PayPal SDK -->
     <script src="https://www.paypal.com/sdk/js?client-id=AfQEdiielw5fm3wF08p9pcxwqR3gPz82YRNUTKY4A8WNG9AktiGsDNyr2i7BsjVzSwwpeCwR7Tt7DPq5&currency=EUR"></script>
     
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DBXYNPBSPY"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-DBXYNPBSPY');
-    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        
+        /* Header */
+        .header {
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 2em;
+            font-weight: bold;
+            background: linear-gradient(45deg, #ff1493, #ff69b4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .nav-menu {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+        
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+            padding: 10px 20px;
+            border-radius: 25px;
+        }
+        
+        .nav-menu a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .vip-btn {
+            background: linear-gradient(45deg, gold, orange);
+            color: #333;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .vip-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
+        }
+        
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 60px 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .hero h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, white, #ff69b4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero p {
+            font-size: 1.3em;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            margin-top: 30px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #ff69b4;
+        }
+        
+        .stat-label {
+            font-size: 1.1em;
+            opacity: 0.8;
+        }
+        
+        /* Banner Carousel */
+        .banner-carousel {
+            position: relative;
+            height: 400px;
+            margin: 40px auto;
+            max-width: 1200px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        
+        .banner-slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s;
+        }
+        
+        .banner-slide.active {
+            opacity: 1;
+        }
+        
+        .banner-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* Gallery Section */
+        .gallery-section {
+            max-width: 1400px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .section-header h2 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+        
+        .gallery-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .tab-btn {
+            padding: 12px 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.1em;
+        }
+        
+        .tab-btn:hover, .tab-btn.active {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .gallery-item {
+            position: relative;
+            aspect-ratio: 1;
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .gallery-item.premium::before {
+            content: '🔒 PREMIUM';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 20, 147, 0.9);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: bold;
+            z-index: 10;
+        }
+        
+        .gallery-item.new::after {
+            content: '✨ NEW';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(0, 255, 0, 0.9);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: bold;
+            z-index: 10;
+        }
+        
+        /* Pricing Section */
+        .pricing-section {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 60px 20px;
+            margin-top: 60px;
+        }
+        
+        .pricing-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .pricing-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .pricing-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s;
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            border-color: #ff69b4;
+            box-shadow: 0 20px 40px rgba(255, 105, 180, 0.3);
+        }
+        
+        .pricing-card.featured {
+            background: rgba(255, 20, 147, 0.2);
+            border-color: #ff1493;
+            transform: scale(1.05);
+        }
+        
+        .plan-name {
+            font-size: 1.8em;
+            margin-bottom: 10px;
+        }
+        
+        .plan-price {
+            font-size: 3em;
+            font-weight: bold;
+            color: #ff69b4;
+            margin-bottom: 20px;
+        }
+        
+        .plan-price .currency {
+            font-size: 0.5em;
+            vertical-align: super;
+        }
+        
+        .plan-features {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+        
+        .plan-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .purchase-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, #ff1493, #ff69b4);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .purchase-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 20, 147, 0.4);
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2em;
+            cursor: pointer;
+            color: white;
+        }
+        
+        .paypal-container {
+            margin-top: 30px;
+            min-height: 200px;
+        }
+        
+        /* Footer */
+        .footer {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 40px 20px;
+            text-align: center;
+            margin-top: 80px;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: #ff69b4;
+        }
+        
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #ff69b4;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.5em;
+            }
+            
+            .stats {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            
+            .pricing-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- El contenido del body será generado dinámicamente por JavaScript -->
-    <div id="app-root"></div>
-    
-    <!-- Loading Screen -->
-    <div id="loading-screen" style="position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);display:flex;justify-content:center;align-items:center;z-index:9999;">
-        <div style="text-align:center;color:white;">
-            <h2 style="font-size:2em;margin-bottom:20px;">IbizaGirl.pics</h2>
-            <div class="spinner" style="border:4px solid rgba(255,255,255,0.3);border-top:4px solid white;border-radius:50%;width:50px;height:50px;animation:spin 1s linear infinite;margin:0 auto;"></div>
-            <style>@keyframes spin{0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}</style>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav-container">
+            <div class="logo">IbizaGirl.pics 🏖️</div>
+            <ul class="nav-menu">
+                <li><a href="#gallery">Galería</a></li>
+                <li><a href="#videos">Videos</a></li>
+                <li><a href="#pricing">Precios</a></li>
+                <li><a href="#contact">Contacto</a></li>
+            </ul>
+            <a href="#vip" class="vip-btn">⭐ VIP Access</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Paradise Gallery Ibiza</h1>
+        <p>Contenido exclusivo actualizado diariamente desde el paraíso mediterráneo</p>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number">400+</div>
+                <div class="stat-label">Fotos HD</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">80+</div>
+                <div class="stat-label">Videos Premium</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">Diario</div>
+                <div class="stat-label">Actualizaciones</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Banner Carousel -->
+    <div class="banner-carousel">
+        <div class="banner-slide active">
+            <img src="/full/bikbanner.webp" alt="Banner 1">
+        </div>
+        <div class="banner-slide">
+            <img src="/full/bikbanner2.webp" alt="Banner 2">
+        </div>
+        <div class="banner-slide">
+            <img src="/full/backbikini.webp" alt="Banner 3">
         </div>
     </div>
-    
-    <!-- ============================
-         SISTEMA MODULAR DE CONTENIDO v4.1.0
-         Orden de carga CRÍTICO - NO MODIFICAR
-         ============================ -->
-    
-    <!-- 1. Configuración y utilidades base -->
-    <script src="content-data1.js"></script>
-    
-    <!-- 2. Imágenes públicas (127 archivos) -->
-    <script src="content-data2.js"></script>
-    
-    <!-- 3. Imágenes premium parte 1 (186 archivos) -->
-    <script src="content-data3.js"></script>
-    
-    <!-- 4. Imágenes premium parte 2 (204 archivos) -->
-    <script src="content-data4.js"></script>
-    
-    <!-- 5. Videos premium (67 archivos) -->
-    <script src="content-data5.js"></script>
-    
-    <!-- 6. API unificada -->
-    <script src="content-data6.js"></script>
-    
-    <!-- 7. Integrador de contenido -->
-    <script src="content-data-integration.js"></script>
-    
-    <!-- 8. Script de verificación (solo desarrollo) -->
-    <script src="verification.js"></script>
-    
-    <!-- 9. Script principal -->
-    <script src="main-script.js"></script>
-    
-    <!-- Service Worker Registration -->
+
+    <!-- Gallery Section -->
+    <section class="gallery-section" id="gallery">
+        <div class="section-header">
+            <h2>📸 Galería de Fotos</h2>
+            <p>Selecciona una categoría para explorar</p>
+        </div>
+        
+        <div class="gallery-tabs">
+            <button class="tab-btn active" onclick="showGallery('free')">Gratis</button>
+            <button class="tab-btn" onclick="showGallery('premium')">Premium 🔒</button>
+            <button class="tab-btn" onclick="showGallery('daily')">Diarias ✨</button>
+        </div>
+        
+        <div class="gallery-grid" id="photo-gallery">
+            <!-- Las fotos se cargarán dinámicamente aquí -->
+        </div>
+    </section>
+
+    <!-- Videos Section -->
+    <section class="gallery-section" id="videos">
+        <div class="section-header">
+            <h2>🎬 Videos Premium</h2>
+            <p>Contenido exclusivo en HD</p>
+        </div>
+        
+        <div class="gallery-grid" id="video-gallery">
+            <!-- Los videos se cargarán dinámicamente aquí -->
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing-section" id="pricing">
+        <div class="pricing-container">
+            <div class="section-header">
+                <h2>💎 Planes y Precios</h2>
+                <p>Elige el plan que mejor se adapte a ti</p>
+            </div>
+            
+            <div class="pricing-cards">
+                <div class="pricing-card">
+                    <h3 class="plan-name">Individual</h3>
+                    <div class="plan-price">
+                        <span class="currency">€</span>0.10
+                    </div>
+                    <ul class="plan-features">
+                        <li>✓ Por foto premium</li>
+                        <li>✓ Descarga inmediata</li>
+                        <li>✓ Alta resolución</li>
+                        <li>✓ Sin marca de agua</li>
+                    </ul>
+                    <button class="purchase-btn" onclick="purchaseItem('photo')">Comprar Foto</button>
+                </div>
+                
+                <div class="pricing-card featured">
+                    <h3 class="plan-name">Mensual VIP</h3>
+                    <div class="plan-price">
+                        <span class="currency">€</span>19.99
+                    </div>
+                    <ul class="plan-features">
+                        <li>✓ Acceso ilimitado</li>
+                        <li>✓ +400 fotos premium</li>
+                        <li>✓ +80 videos HD</li>
+                        <li>✓ Actualizaciones diarias</li>
+                        <li>✓ Contenido exclusivo</li>
+                    </ul>
+                    <button class="purchase-btn" onclick="purchaseSubscription('monthly')">Suscribirse</button>
+                </div>
+                
+                <div class="pricing-card">
+                    <h3 class="plan-name">Lifetime</h3>
+                    <div class="plan-price">
+                        <span class="currency">€</span>100
+                    </div>
+                    <ul class="plan-features">
+                        <li>✓ Acceso de por vida</li>
+                        <li>✓ Todo el contenido</li>
+                        <li>✓ Futuras actualizaciones</li>
+                        <li>✓ Prioridad VIP</li>
+                        <li>✓ Contenido exclusivo</li>
+                    </ul>
+                    <button class="purchase-btn" onclick="purchaseSubscription('lifetime')">Comprar Lifetime</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h2 id="modal-title">Completar Compra</h2>
+            <p id="modal-description">Selecciona tu método de pago preferido</p>
+            <div id="paypal-container" class="paypal-container"></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="#terms">Términos y Condiciones</a>
+            <a href="#privacy">Política de Privacidad</a>
+            <a href="#contact">Contacto</a>
+            <a href="#support">Soporte</a>
+        </div>
+        <p>&copy; 2025 IbizaGirl.pics - Todos los derechos reservados</p>
+        <p style="margin-top: 10px; opacity: 0.7;">🔒 Pagos seguros con PayPal</p>
+    </footer>
+
     <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js')
-                    .then(reg => console.log('Service Worker registrado:', reg))
-                    .catch(err => console.log('Service Worker error:', err));
+        // Arrays de contenido
+        const FULL_IMAGES = [
+            'full/0456996c-b56e-42ef-9049-56b1a1ae2646.webp',
+            'full/85158b64-4168-45fa-9cb4-0b40634f7fa1.webp',
+            'full/bikini.webp',
+            'full/bikini3.webp',
+            'full/bikini5.webp',
+            'full/backbikini.webp',
+            'full/buena.webp',
+            'full/Sin nombre(12).webp',
+            'full/Sin nombre(42).webp',
+            'full/Sin nombre(63).webp'
+        ];
+
+        const PREMIUM_IMAGES = [
+            'uncensored/00wd2wVE89BJnQVenuNP.webp',
+            'uncensored/46yy65BCWILWvvLCbqn2.webp',
+            'uncensored/cpoIVHMZzemmt5HJTjHk.webp',
+            'uncensored/d2VE38Jpn8y8IzBvUgXb.webp',
+            'uncensored/HI1hEiBDawW7Jt69olSP.webp'
+        ];
+
+        const VIDEO_THUMBNAILS = [
+            'uncensored-videos/preview1.jpg',
+            'uncensored-videos/preview2.jpg',
+            'uncensored-videos/preview3.jpg',
+            'uncensored-videos/preview4.jpg',
+            'uncensored-videos/preview5.jpg'
+        ];
+
+        let currentGalleryType = 'free';
+        let currentSlide = 0;
+        let isVIP = false;
+
+        // Banner carousel
+        function startBannerCarousel() {
+            const slides = document.querySelectorAll('.banner-slide');
+            setInterval(() => {
+                slides[currentSlide].classList.remove('active');
+                currentSlide = (currentSlide + 1) % slides.length;
+                slides[currentSlide].classList.add('active');
+            }, 5000);
+        }
+
+        // Gallery functions
+        function showGallery(type) {
+            currentGalleryType = type;
+            const gallery = document.getElementById('photo-gallery');
+            gallery.innerHTML = '';
+            
+            // Update active tab
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            let images = [];
+            
+            switch(type) {
+                case 'free':
+                    images = FULL_IMAGES.slice(0, 12);
+                    break;
+                case 'premium':
+                    images = PREMIUM_IMAGES.slice(0, 12);
+                    break;
+                case 'daily':
+                    // Mix of both with "new" tags
+                    images = [...FULL_IMAGES.slice(0, 6), ...PREMIUM_IMAGES.slice(0, 6)];
+                    break;
+            }
+            
+            images.forEach((img, index) => {
+                const item = document.createElement('div');
+                item.className = 'gallery-item';
+                
+                if (type === 'premium' || (type === 'daily' && index >= 6)) {
+                    item.classList.add('premium');
+                }
+                
+                if (type === 'daily' && index < 3) {
+                    item.classList.add('new');
+                }
+                
+                item.innerHTML = `<img src="/${img}" alt="Gallery Image ${index + 1}" onerror="this.src='/full/bikini.webp'">`;
+                
+                item.onclick = () => {
+                    if (item.classList.contains('premium') && !isVIP) {
+                        openPaymentModal('photo');
+                    } else {
+                        // Open image viewer
+                        viewImage(img);
+                    }
+                };
+                
+                gallery.appendChild(item);
             });
         }
-    </script>
-    
-    <!-- Ocultar loading cuando todo esté listo -->
-    <script>
-        window.addEventListener('DOMContentLoaded', () => {
-            setTimeout(() => {
-                const loadingScreen = document.getElementById('loading-screen');
-                if (loadingScreen) {
-                    loadingScreen.style.transition = 'opacity 0.5s';
-                    loadingScreen.style.opacity = '0';
-                    setTimeout(() => {
-                        loadingScreen.style.display = 'none';
-                    }, 500);
+
+        // Load video gallery
+        function loadVideoGallery() {
+            const gallery = document.getElementById('video-gallery');
+            gallery.innerHTML = '';
+            
+            for (let i = 1; i <= 8; i++) {
+                const item = document.createElement('div');
+                item.className = 'gallery-item premium';
+                item.innerHTML = `
+                    <img src="/full/bikini${i % 5 || 5}.webp" alt="Video ${i}">
+                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 3em;">▶️</div>
+                `;
+                
+                item.onclick = () => {
+                    if (!isVIP) {
+                        openPaymentModal('video');
+                    } else {
+                        // Play video
+                        playVideo(i);
+                    }
+                };
+                
+                gallery.appendChild(item);
+            }
+        }
+
+        // Payment functions
+        function openPaymentModal(type) {
+            const modal = document.getElementById('paymentModal');
+            const title = document.getElementById('modal-title');
+            const description = document.getElementById('modal-description');
+            
+            switch(type) {
+                case 'photo':
+                    title.textContent = 'Comprar Foto Premium';
+                    description.textContent = 'Precio: €0.10 - Descarga inmediata en alta resolución';
+                    initPayPal(0.10, 'Foto Premium');
+                    break;
+                case 'video':
+                    title.textContent = 'Comprar Video Premium';
+                    description.textContent = 'Precio: €0.30 - Video HD sin restricciones';
+                    initPayPal(0.30, 'Video Premium');
+                    break;
+            }
+            
+            modal.style.display = 'flex';
+        }
+
+        function purchaseSubscription(type) {
+            const modal = document.getElementById('paymentModal');
+            const title = document.getElementById('modal-title');
+            const description = document.getElementById('modal-description');
+            
+            switch(type) {
+                case 'monthly':
+                    title.textContent = 'Suscripción Mensual VIP';
+                    description.textContent = 'Precio: €19.99/mes - Acceso ilimitado a todo el contenido';
+                    initPayPal(19.99, 'Suscripción Mensual VIP');
+                    break;
+                case 'lifetime':
+                    title.textContent = 'Acceso Lifetime';
+                    description.textContent = 'Precio: €100 - Pago único, acceso de por vida';
+                    initPayPal(100.00, 'Acceso Lifetime');
+                    break;
+            }
+            
+            modal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('paymentModal').style.display = 'none';
+            document.getElementById('paypal-container').innerHTML = '';
+        }
+
+        function initPayPal(amount, description) {
+            const container = document.getElementById('paypal-container');
+            container.innerHTML = ''; // Clear previous buttons
+            
+            paypal.Buttons({
+                createOrder: function(data, actions) {
+                    return actions.order.create({
+                        purchase_units: [{
+                            amount: {
+                                value: amount.toFixed(2),
+                                currency_code: 'EUR'
+                            },
+                            description: description
+                        }]
+                    });
+                },
+                onApprove: function(data, actions) {
+                    return actions.order.capture().then(function(details) {
+                        // Payment successful
+                        alert('¡Pago completado! Gracias por tu compra, ' + details.payer.name.given_name);
+                        
+                        // Unlock content based on purchase
+                        if (description.includes('Mensual') || description.includes('Lifetime')) {
+                            isVIP = true;
+                            unlockVIPContent();
+                        }
+                        
+                        closeModal();
+                    });
+                },
+                onError: function(err) {
+                    console.error('PayPal Error:', err);
+                    alert('Error al procesar el pago. Por favor, intenta de nuevo.');
                 }
-            }, 1500);
+            }).render('#paypal-container');
+        }
+
+        function unlockVIPContent() {
+            // Remove all premium locks
+            document.querySelectorAll('.gallery-item.premium').forEach(item => {
+                item.classList.remove('premium');
+            });
+            
+            // Show success message
+            const vipBadge = document.querySelector('.vip-btn');
+            if (vipBadge) {
+                vipBadge.textContent = '👑 VIP Member';
+                vipBadge.style.background = 'linear-gradient(45deg, #ff1493, #ff69b4)';
+            }
+        }
+
+        function viewImage(src) {
+            // Simple image viewer (can be enhanced)
+            window.open('/' + src, '_blank');
+        }
+
+        function playVideo(id) {
+            alert('Video player coming soon! Video ID: ' + id);
+        }
+
+        function purchaseItem(type) {
+            if (type === 'photo') {
+                openPaymentModal('photo');
+            }
+        }
+
+        // Initialize on load
+        window.addEventListener('DOMContentLoaded', () => {
+            startBannerCarousel();
+            showGallery('free');
+            loadVideoGallery();
+            
+            // Smooth scroll
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
         });
+
+        // Close modal on outside click
+        window.onclick = function(event) {
+            const modal = document.getElementById('paymentModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
     </script>
 </body>
 </html>

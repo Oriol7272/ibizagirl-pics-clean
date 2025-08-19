@@ -1,0 +1,114 @@
+# ============================
+# IBIZAGIRL.PICS - .htaccess
+# Configuración Apache optimizada
+# ============================
+
+# Forzar HTTPS
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+
+# Forzar www (opcional - descomenta si quieres usar www)
+# RewriteCond %{HTTP_HOST} !^www\. [NC]
+# RewriteRule ^(.*)$ https://www.%{HTTP_HOST}/$1 [R=301,L]
+
+# Seguridad - Ocultar versión de servidor
+ServerSignature Off
+
+# Prevenir acceso a archivos sensibles
+<FilesMatch "^\.">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Bloquear acceso a archivos de respaldo
+<FilesMatch "\.(bak|config|sql|fla|psd|ini|log|sh|inc|swp|dist)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Configurar tipos MIME correctos
+AddType image/webp .webp
+AddType video/mp4 .mp4
+AddType application/json .json
+AddType application/javascript .js
+AddType text/css .css
+
+# Habilitar compresión GZIP
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE text/javascript
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/json
+    AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>
+
+# Cache del navegador
+<IfModule mod_expires.c>
+    ExpiresActive On
+    
+    # Imágenes - 1 mes
+    ExpiresByType image/webp "access plus 1 month"
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType image/gif "access plus 1 month"
+    
+    # Videos - 1 mes
+    ExpiresByType video/mp4 "access plus 1 month"
+    
+    # CSS y JS - 1 semana
+    ExpiresByType text/css "access plus 1 week"
+    ExpiresByType application/javascript "access plus 1 week"
+    
+    # HTML - no cache
+    ExpiresByType text/html "access plus 0 seconds"
+</IfModule>
+
+# Headers de seguridad
+<IfModule mod_headers.c>
+    # Prevenir clickjacking
+    Header always set X-Frame-Options "SAMEORIGIN"
+    
+    # Prevenir XSS
+    Header always set X-XSS-Protection "1; mode=block"
+    
+    # Prevenir MIME sniffing
+    Header always set X-Content-Type-Options "nosniff"
+    
+    # Referrer Policy
+    Header always set Referrer-Policy "same-origin"
+    
+    # Permitir Service Worker
+    Header set Service-Worker-Allowed "/"
+</IfModule>
+
+# Página de error personalizada
+ErrorDocument 404 /404.html
+ErrorDocument 403 /403.html
+ErrorDocument 500 /500.html
+
+# Proteger archivos de verificación
+<FilesMatch "^(f67a56f266e834d596c42122f88bb88d|97ce8adfbeb6e153ef4ebf2566dfeb7d|eroads__5f8afe77e5b70fec960d89b314e045a4)\.html$">
+    Order allow,deny
+    Allow from all
+</FilesMatch>
+
+# Reglas de redirección personalizadas
+# Redirigir página antigua a nueva (ejemplo)
+# Redirect 301 /old-page.html /main.html
+
+# Configuración de índice
+DirectoryIndex index.html index.php
+
+# Desactivar listado de directorios
+Options -Indexes
+
+# Configuración UTF-8
+AddDefaultCharset UTF-8
+
+# Límite de upload (si tu hosting lo permite)
+# php_value upload_max_filesize 64M
+# php_value post_max_size 64M
+# php_value max_execution_time 300
+# php_value max_input_time 300

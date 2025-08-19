@@ -46,7 +46,9 @@
     <!-- Preconnect para optimización -->
     <link rel="preconnect" href="https://www.paypal.com">
     <link rel="preconnect" href="https://www.paypalobjects.com">
+    <link rel="preconnect" href="https://www.juicyads.com">
     <link rel="dns-prefetch" href="//www.paypal.com">
+    <link rel="dns-prefetch" href="//www.juicyads.com">
     
     <!-- Estilos -->
     <link rel="stylesheet" href="styles.css">
@@ -81,6 +83,11 @@
             <button class="mobile-menu-btn">☰</button>
         </nav>
     </header>
+
+    <!-- Espacio para Banner de JuicyAds Superior -->
+    <div class="ad-container" id="juicyads-header" style="text-align: center; margin: 20px auto; min-height: 90px;">
+        <!-- JuicyAds Banner Superior aquí -->
+    </div>
 
     <!-- Hero Section -->
     <section class="hero">
@@ -132,6 +139,11 @@
             <div class="loading-spinner">Cargando galería...</div>
         </div>
     </section>
+
+    <!-- Espacio para Anuncio de JuicyAds Medio -->
+    <div class="ad-container" id="juicyads-middle" style="text-align: center; margin: 40px auto; min-height: 250px;">
+        <!-- JuicyAds Square/Rectangle aquí -->
+    </div>
 
     <!-- Videos Section -->
     <section class="gallery-section" id="videos">
@@ -228,6 +240,11 @@
         </div>
     </section>
 
+    <!-- Espacio para Anuncio de JuicyAds Footer -->
+    <div class="ad-container" id="juicyads-footer" style="text-align: center; margin: 40px auto 20px; min-height: 90px;">
+        <!-- JuicyAds Banner Footer aquí -->
+    </div>
+
     <!-- Payment Modal -->
     <div id="paymentModal" class="modal">
         <div class="modal-content">
@@ -256,10 +273,9 @@
 
     <!-- ============================
          CARGA DE SCRIPTS
-         Orden crítico - NO modificar
          ============================ -->
     
-    <!-- 1. Módulos de contenido -->
+    <!-- 1. Módulos de contenido (SOLO los que existen) -->
     <script src="content-data1.js"></script>
     <script src="content-data2.js"></script>
     <script src="content-data3.js"></script>
@@ -267,7 +283,7 @@
     <script src="content-data5.js"></script>
     <script src="content-data6.js"></script>
     
-    <!-- 2. Sistema principal integrado -->
+    <!-- 2. Sistema principal -->
     <script src="main-integrated.js"></script>
     
     <!-- 3. Service Worker -->
@@ -290,9 +306,77 @@
         gtag('config', 'G-DBXYNPBSPY');
     </script>
     
-    <!-- 5. Script de inicialización rápida -->
+    <!-- 5. JuicyAds - Carga Segura -->
+    <script type="text/javascript">
+        // Esperar a que el DOM esté listo antes de cargar JuicyAds
+        document.addEventListener('DOMContentLoaded', function() {
+            // Verificar que los contenedores existan antes de cargar JuicyAds
+            if (document.getElementById('juicyads-header')) {
+                // Cargar script de JuicyAds de forma segura
+                var jadsScript = document.createElement('script');
+                jadsScript.type = 'text/javascript';
+                jadsScript.async = true;
+                jadsScript.src = 'https://js.juicyads.com/jads.js';
+                
+                jadsScript.onload = function() {
+                    // Una vez cargado JuicyAds, configurar los ads
+                    if (typeof window.jads !== 'undefined') {
+                        console.log('JuicyAds cargado correctamente');
+                        
+                        // Aquí puedes añadir tu configuración de JuicyAds
+                        // Por ejemplo:
+                        /* 
+                        (adsbyjuicy = window.adsbyjuicy || []).push({
+                            'adzone': 'TU_ADZONE_ID_HEADER'
+                        });
+                        */
+                    }
+                };
+                
+                jadsScript.onerror = function() {
+                    console.warn('JuicyAds no se pudo cargar - Posiblemente bloqueado por AdBlock');
+                };
+                
+                // Añadir el script al documento
+                document.head.appendChild(jadsScript);
+            }
+        });
+    </script>
+    
+    <!-- 6. Configuración de Ads Zones de JuicyAds -->
+    <script type="text/javascript">
+        // Configurar las zonas de anuncios cuando JuicyAds esté listo
+        window.addEventListener('load', function() {
+            // Verificar si JuicyAds está disponible
+            if (typeof window.adsbyjuicy !== 'undefined') {
+                // Header Ad Zone - Reemplaza XXXXX con tu Zone ID real
+                /*
+                var headerAd = document.getElementById('juicyads-header');
+                if (headerAd) {
+                    headerAd.innerHTML = '<ins class="juicyads" data-zone-id="XXXXX"></ins>';
+                }
+                
+                // Middle Ad Zone - Reemplaza YYYYY con tu Zone ID real
+                var middleAd = document.getElementById('juicyads-middle');
+                if (middleAd) {
+                    middleAd.innerHTML = '<ins class="juicyads" data-zone-id="YYYYY"></ins>';
+                }
+                
+                // Footer Ad Zone - Reemplaza ZZZZZ con tu Zone ID real
+                var footerAd = document.getElementById('juicyads-footer');
+                if (footerAd) {
+                    footerAd.innerHTML = '<ins class="juicyads" data-zone-id="ZZZZZ"></ins>';
+                }
+                
+                // Refrescar JuicyAds para mostrar los anuncios
+                (adsbyjuicy = window.adsbyjuicy || []).push({});
+                */
+            }
+        });
+    </script>
+    
+    <!-- 7. Script de inicialización y verificación -->
     <script>
-        // Inicialización básica mientras carga el sistema principal
         document.addEventListener('DOMContentLoaded', function() {
             // Ocultar loading screen después de 2 segundos
             setTimeout(function() {
@@ -305,7 +389,7 @@
                 }
             }, 2000);
             
-            // Verificar que los módulos se cargaron
+            // Verificar módulos cargados
             setTimeout(function() {
                 console.log('=== VERIFICACIÓN DEL SISTEMA ===');
                 console.log('Módulos cargados:', {
@@ -314,20 +398,31 @@
                     PremiumPart1: typeof PREMIUM_IMAGES_PART1 !== 'undefined',
                     PremiumPart2: typeof PREMIUM_IMAGES_PART2 !== 'undefined',
                     Videos: typeof PREMIUM_VIDEOS_POOL !== 'undefined',
-                    API: typeof UnifiedContentAPI !== 'undefined'
+                    API: typeof UnifiedContentAPI !== 'undefined',
+                    PayPal: typeof paypal !== 'undefined',
+                    JuicyAds: typeof jads !== 'undefined' || typeof adsbyjuicy !== 'undefined'
                 });
                 
-                // Mostrar estadísticas reales
+                // Actualizar estadísticas
                 if (window.FULL_IMAGES_POOL && window.PREMIUM_IMAGES_PART1) {
                     const totalPhotos = (window.FULL_IMAGES_POOL?.length || 0) + 
                                       (window.PREMIUM_IMAGES_PART1?.length || 0) + 
                                       (window.PREMIUM_IMAGES_PART2?.length || 0);
                     const totalVideos = window.PREMIUM_VIDEOS_POOL?.length || 0;
                     
-                    document.querySelector('[data-stat="photos"]').textContent = totalPhotos + '+';
-                    document.querySelector('[data-stat="videos"]').textContent = totalVideos + '+';
+                    const photoStat = document.querySelector('[data-stat="photos"]');
+                    const videoStat = document.querySelector('[data-stat="videos"]');
+                    
+                    if (photoStat) photoStat.textContent = totalPhotos + '+';
+                    if (videoStat) videoStat.textContent = totalVideos + '+';
+                    
+                    console.log('Total contenido:', {
+                        fotos: totalPhotos,
+                        videos: totalVideos,
+                        total: totalPhotos + totalVideos
+                    });
                 }
-            }, 1000);
+            }, 1500);
         });
     </script>
 </body>
